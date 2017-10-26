@@ -1,0 +1,16 @@
+{
+  "name": "chat-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rameez Arif",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.17.0",
+    "botbuilder": "^3.9.1",
+    "restify": "^5.2.0"
+  }
+}
