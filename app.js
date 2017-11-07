@@ -2,7 +2,7 @@ var restify = require('restify');
 var builder = require('botbuilder');
 var axios = require('axios');
 
-const BASE_URL = "https://api.coinmarketcap.com/v1/ticker/bitcoin/";
+const BASE_URL = "https://api.coinmarketcap.com/v1/ticker/";
 
 // Setup Restify Server
 var server = restify.createServer();
@@ -31,14 +31,20 @@ bot.dialog('promptUser', [
       builder.Prompts.text(session, "Hi, I'm crypto bot. I can give you information about your favorite cryptocurrency");
     },
     function (session, results) {
-      getPrice(results.currency, session);
-
+      getPrice(results.response, session);
     }
 ]);
 
 
 let getPrice = async (currency, session) => {
-  let response = await axios.get(BASE_URL);
-  console.log(console.log(response.data));
-  session.endDialog("Price is " + response.data[0].price_usd);
+
+  let url = BASE_URL + currency;
+  try {
+    let response = await axios.get(url);
+    //console.log(console.log(response.data));
+    session.endDialog("Price of " + currency + " is " + response.data[0].price_usd);
+
+  } catch(error) {
+    session.endDialog("Sorry there was en error retrieving currency information");
+  }
 }
